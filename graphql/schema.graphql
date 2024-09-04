@@ -23,5 +23,5 @@ type Mutation {
 }
 
 type Query {
-    info: User @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@info")
+    info: User @field(resolver: "App\\GraphQL\\Queries\\UserQuery@info")
 }

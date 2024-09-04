@@ -52,11 +52,7 @@ final class UserMutations
 
         return $this->respondWithToken($token);
     }
-    public function info($rootValue, array $args)
-    {
-        return Auth::user();
-    }
-
+   
     public function logout($rootValue, array $args)
     {
         Auth::logout();
