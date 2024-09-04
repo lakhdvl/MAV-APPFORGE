@@ -1,3 +1,27 @@
+type User {
+    id: ID!
+    username: String!
+    email: String!
+}
+
+type AuthPayload {
+    access_token: String!
+    token_type: String!
+    expires_in: Int!
+    user: User
+}
+
+type Message {
+    message: String!
+}
+
+type Mutation {
+    register(username: String!, email: String!, password: String!): Message @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@register")
+    login(email: String!, password: String!): AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@login")
+    logout: Message @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@logout")
+    refresh: AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@refresh")
+}
+
 type Query {
-    ping: String!
+    info: User @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@info")
 }

@@ -20,3 +20,14 @@ $router->get('/', function () use ($router) {
 $router->post('/graphql', [
     'uses' => '\Nuwave\Lighthouse\GraphQLController@query'
 ]);
+Route::group([
+
+    'prefix' => 'api'
+
+], function ($router) {
+    Route::post('register', 'AuthController@register');
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('user-profile', 'AuthController@me');
+});
