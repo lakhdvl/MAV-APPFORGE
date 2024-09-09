@@ -17,7 +17,7 @@ class CreateWalletsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('name');
-            $table->decimal('balance', 15, 2);
+            $table->decimal('balance', 15, 2)->default(0);
             $table->string('currency');
             $table->timestamps();
 
