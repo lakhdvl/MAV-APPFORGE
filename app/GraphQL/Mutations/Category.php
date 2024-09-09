@@ -9,10 +9,19 @@ use GraphQL\Error\Error;
 
 final class Category
 {
+    private $user;
+
     /**
-     * @param  null  $_
-     * @param  array{}  $args
+     * Authenticate
      */
+    public function __construct()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            throw new \Exception('Unauthorized');
+        }
+        $this->user = $user;
+    }
 
     /**
      * Create a new Category
@@ -31,10 +40,8 @@ final class Category
             throw new \Exception($validator->errors()->first());
         }
 
-        $user = Auth::user();
-
         $categories =  Categories::create([
-            'user_id' => $user->id,
+            'user_id' => $this->user->id,
             'name' => $args['name'],
             'type' => $args['type'],
         ]);
@@ -63,7 +70,7 @@ final class Category
             throw new \Exception($validator->errors()->first());
         }
 
-        $category = Categories::where('id', $args['id'])->where('user_id', Auth::id())->first();
+        $category = Categories::where('id', $args['id'])->where('user_id', $this->user->id)->first();
 
         if (!$category) {
             throw new \Exception('category not found');
@@ -101,7 +108,7 @@ final class Category
             throw new \Exception($validator->errors()->first());
         }
 
-        $category = Categories::where('id', $args['id'])->where('user_id', Auth::id())->first();
+        $category = Categories::where('id', $args['id'])->where('user_id', $this->user->id)->first();
 
         if (!$category) {
             throw new \Exception('Category not found');
