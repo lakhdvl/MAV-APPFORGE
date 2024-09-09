@@ -12,6 +12,14 @@ type Wallet{
     created_at: String
     updated_at: String
 }
+
+type Category {
+  id: ID!
+  name: String!
+  type: String!
+  user_id: ID!
+}
+
 type AuthPayload {
     access_token: String!
     token_type: String!
@@ -34,6 +42,11 @@ type Mutation {
     createWallet(name: String!, balance: Float!, currency: String!): Wallet! @field(resolver: "App\\GraphQL\\Mutations\\Wallet@createWallet")
     updateWallet(id: ID!, name: String, balance: Float, currency: String): Wallet! @field(resolver: "App\\GraphQL\\Mutations\\Wallet@updateWallet")
     deleteWallet(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Wallet@deleteWallet")
+
+    # Category
+    createCategory(name: String!, type: String!): Category! @field(resolver: "App\\GraphQL\\Mutations\\Category@CreateCategory")
+    updateCategory(id: ID!, name: String!, type: String!): Category! @field(resolver: "App\\GraphQL\\Mutations\\Category@UpdateCategory")
+    deleteCategory(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Category@DeleteCategory")
 }
 
 type Query {
@@ -45,4 +58,8 @@ type Query {
 
     # wallets
     wallets: [Wallet!]! @field(resolver: "App\\GraphQL\\Queries\\Wallet@listWallets")
+
+    # Category
+    categories: [Category!]! @field(resolver: "App\\GraphQL\\Queries\\Category@listCategories")
+
 }
