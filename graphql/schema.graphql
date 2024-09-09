@@ -3,7 +3,15 @@ type User {
     username: String!
     email: String!
 }
-
+type Wallet{
+    id: ID!
+    user_id: ID!
+    name: String!
+    balance: Float!
+    currency: String!
+    created_at: String
+    updated_at: String
+}
 type AuthPayload {
     access_token: String!
     token_type: String!
@@ -16,12 +24,25 @@ type Message {
 }
 
 type Mutation {
+    # users
     register(username: String!, email: String!, password: String!): Message @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@register")
     login(email: String!, password: String!): AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@login")
     logout: Message @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@logout")
     refresh: AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@refresh")
+
+    # wallets
+    createWallet(name: String!, balance: Float!, currency: String!): Wallet! @field(resolver: "App\\GraphQL\\Mutations\\Wallet@createWallet")
+    updateWallet(id: ID!, name: String, balance: Float, currency: String): Wallet! @field(resolver: "App\\GraphQL\\Mutations\\Wallet@updateWallet")
+    deleteWallet(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Wallet@deleteWallet")
 }
 
 type Query {
+    # ping
+    ping: String
+
+    # users
     info: User @field(resolver: "App\\GraphQL\\Queries\\UserQuery@info")
+
+    # wallets
+    wallets: [Wallet!]! @field(resolver: "App\\GraphQL\\Queries\\Wallet@listWallets")
 }
