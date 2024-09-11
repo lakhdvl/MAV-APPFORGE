@@ -20,6 +20,29 @@ type Category {
   user_id: ID!
 }
 
+type Income {
+  id: ID!
+  user_id: ID!
+  category: Category!
+  wallet: Wallet!
+  amount: Float!
+  date: String!
+  description: String
+  created_at: String
+  updated_at: String
+}
+type Expense {
+  id: ID!
+  user_id: ID!
+  category: Category!
+  wallet: Wallet!
+  amount: Float!
+  date: String!
+  description: String
+  created_at: String
+  updated_at: String
+}
+
 type AuthPayload {
     access_token: String!
     token_type: String!
@@ -47,6 +70,16 @@ type Mutation {
     createCategory(name: String!, type: String!): Category! @field(resolver: "App\\GraphQL\\Mutations\\Category@CreateCategory")
     updateCategory(id: ID!, name: String!, type: String!): Category! @field(resolver: "App\\GraphQL\\Mutations\\Category@UpdateCategory")
     deleteCategory(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Category@DeleteCategory")
+
+    # Income
+    createIncome(category_id: ID!, wallet_id: ID!, amount: Float!, date: String!, description: String): Income! @field(resolver: "App\\GraphQL\\Mutations\\Income@createIncome")
+    updateIncome(id: ID!, category_id: ID, wallet_id: ID, amount: Float, date: String, description: String): Income! @field(resolver: "App\\GraphQL\\Mutations\\Income@updateIncome")
+    deleteIncome(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Income@deleteIncome")
+
+    # Expense
+    createExpense(category_id: ID!, wallet_id: ID!, amount: Float!, date: String!, description: String): Expense! @field(resolver: "App\\GraphQL\\Mutations\\Expense@createExpense")
+    updateExpense(id: ID!, category_id: ID, wallet_id: ID, amount: Float, date: String, description: String): Expense! @field(resolver: "App\\GraphQL\\Mutations\\Expense@updateExpense")
+    deleteExpense(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Expense@deleteExpense")
 }
 
 type Query {
@@ -61,5 +94,11 @@ type Query {
 
     # Category
     categories: [Category!]! @field(resolver: "App\\GraphQL\\Queries\\Category@listCategories")
+
+    # Income 
+    incomes: [Income!]! @field(resolver: "App\\GraphQL\\Queries\\Income@listIncomes")
+
+    # Expense
+    expenses: [Expense!]! @field(resolver: "App\\GraphQL\\Queries\\Expense@listExpenses")
 
 }
