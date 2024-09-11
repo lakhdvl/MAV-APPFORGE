@@ -43,6 +43,24 @@ type Expense {
   updated_at: String
 }
 
+type Attribute {
+  id: ID!
+  name: String!
+  entity_type: String!
+  created_at: String
+  updated_at: String
+}
+
+type Value {
+  id: ID!
+  attribute_id: ID!
+  entity_id: ID!
+  entity_type: String!
+  value: String!
+  created_at: String
+  updated_at: String
+}
+
 type AuthPayload {
     access_token: String!
     token_type: String!
@@ -80,6 +98,16 @@ type Mutation {
     createExpense(category_id: ID!, wallet_id: ID!, amount: Float!, date: String!, description: String): Expense! @field(resolver: "App\\GraphQL\\Mutations\\Expense@createExpense")
     updateExpense(id: ID!, category_id: ID, wallet_id: ID, amount: Float, date: String, description: String): Expense! @field(resolver: "App\\GraphQL\\Mutations\\Expense@updateExpense")
     deleteExpense(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Expense@deleteExpense")
+
+    # Attribute
+    createAttribute(name: String!, entity_type: String!): Attribute! @field(resolver: "App\\GraphQL\\Mutations\\Attribute@createAttribute")
+    updateAttribute(id: ID!, name: String!, entity_type: String!): Attribute! @field(resolver: "App\\GraphQL\\Mutations\\Attribute@updateAttribute")
+    deleteAttribute(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Attribute@deleteAttribute")
+
+    # Value 
+    createValue(attribute_id: ID!, entity_id: ID!, entity_type: String!, value: String!): Value! @field(resolver: "App\\GraphQL\\Mutations\\Value@createValue")
+    updateValue(id: ID!, attribute_id: ID!, entity_id: ID!, entity_type: String!, value: String!): Value! @field(resolver: "App\\GraphQL\\Mutations\\Value@updateValue")
+    deleteValue(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Value@deleteValue")
 }
 
 type Query {
@@ -100,5 +128,12 @@ type Query {
 
     # Expense
     expenses: [Expense!]! @field(resolver: "App\\GraphQL\\Queries\\Expense@listExpenses")
+
+    # Attribute
+    attributes: [Attribute!]! @field(resolver: "App\\GraphQL\\Queries\\Attribute@listAttributes")
+
+    # Value
+    values: [Value!]! @field(resolver: "App\\GraphQL\\Queries\\Value@listValues")
+
 
 }
