@@ -50,7 +50,7 @@ final class Expense
         ]);
 
         if (!$Expenses) {
-            throw new \Exception('Could not create Income');
+            throw new \Exception('Could not create Expenses');
         }
         return $Expenses;
     }
@@ -77,7 +77,7 @@ final class Expense
 
 
         if (!$Expenses) {
-            throw new \Exception('category not found');
+            throw new \Exception('Expenses not found');
         }
 
         $Expenses->update($args);
@@ -103,7 +103,7 @@ final class Expense
         $Expenses = Expenses::where('id', $args['id'])->where('user_id', $this->user->id)->firstOrFail();
 
         if (!$Expenses) {
-            throw new \Exception('Income not found');
+            throw new \Exception('Expenses not found');
         }
         $Expenses->delete();
 
