@@ -18,7 +18,7 @@ class Expense
     }
     public function listExpenses()
     {
-        $Expenses = Expenses::where('user_id', $this->user->id)->get();
-        return $Expenses;
+        $expense = Expenses::where('user_id', $this->user->id)->get();
+        return $expense;
     }
 }

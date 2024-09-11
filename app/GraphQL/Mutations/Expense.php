@@ -40,7 +40,7 @@ final class Expense
             throw new \Exception($validator->errors()->first());
         }
 
-        $Expenses =  Expenses::create([
+        $expense =  Expenses::create([
             'user_id' => $this->user->id,
             'category_id' => $args['category_id'],
             'wallet_id' => $args['wallet_id'],
@@ -49,10 +49,10 @@ final class Expense
             'description' => $args['description'] ?? null,
         ]);
 
-        if (!$Expenses) {
-            throw new \Exception('Could not create Expenses');
+        if (!$expense) {
+            throw new \Exception('Could not create expense');
         }
-        return $Expenses;
+        return $expense;
     }
     /**
      * Update a Expense
@@ -73,16 +73,16 @@ final class Expense
             throw new \Exception($validator->errors()->first());
         }
 
-        $Expenses = Expenses::where('id', $args['id'])->where('user_id', $this->user->id)->first();
+        $expense = Expenses::where('id', $args['id'])->where('user_id', $this->user->id)->first();
 
 
-        if (!$Expenses) {
-            throw new \Exception('Expenses not found');
+        if (!$expense) {
+            throw new \Exception('expense not found');
         }
 
-        $Expenses->update($args);
+        $expense->update($args);
 
-        return $Expenses;
+        return $expense;
     }
     /**
      * Delete a Expense
@@ -100,15 +100,15 @@ final class Expense
             throw new \Exception($validator->errors()->first());
         }
 
-        $Expenses = Expenses::where('id', $args['id'])->where('user_id', $this->user->id)->firstOrFail();
+        $expense = Expenses::where('id', $args['id'])->where('user_id', $this->user->id)->firstOrFail();
 
-        if (!$Expenses) {
-            throw new \Exception('Expenses not found');
+        if (!$expense) {
+            throw new \Exception('expense not found');
         }
-        $Expenses->delete();
+        $expense->delete();
 
         return [
-            'message' => 'Successfully delete Expenses'
+            'message' => 'Successfully delete expense'
         ];
     }
 }
