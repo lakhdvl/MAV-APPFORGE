@@ -78,7 +78,7 @@ final class Income
 
 
         if (!$income) {
-            throw new \Exception('category not found');
+            throw new \Exception('income not found');
         }
 
         $income->update($args);
