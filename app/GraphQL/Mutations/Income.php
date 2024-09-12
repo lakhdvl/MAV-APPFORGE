@@ -103,14 +103,14 @@ final class Income
         }
 
         $income = Incomes::where('id', $args['id'])->where('user_id', $this->user->id)->firstOrFail();
+        $income->update(['del_flag' => true]);
 
         if (!$income) {
             throw new \Exception('Income not found');
         }
-        $income->delete();
 
         return [
-            'message' => 'Successfully delete Category'
+            'message' => 'Successfully delete income'
         ];
     }
 }

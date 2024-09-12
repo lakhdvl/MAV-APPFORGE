@@ -18,7 +18,7 @@ class Income
     }
     public function listIncomes()
     {
-        $Incomes = Incomes::where('user_id', $this->user->id)->get();
+        $Incomes = Incomes::active()->where('user_id', $this->user->id)->get();
         return $Incomes;
     }
 }

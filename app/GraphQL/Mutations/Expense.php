@@ -101,11 +101,11 @@ final class Expense
         }
 
         $expense = Expenses::where('id', $args['id'])->where('user_id', $this->user->id)->firstOrFail();
+        $expense->update(['del_flag' => true]);
 
         if (!$expense) {
             throw new \Exception('expense not found');
         }
-        $expense->delete();
 
         return [
             'message' => 'Successfully delete expense'
