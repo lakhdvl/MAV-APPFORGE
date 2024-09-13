@@ -5,6 +5,7 @@ namespace App\GraphQL\Mutations;
 use App\Models\Income as Incomes;
 use App\Models\Expense as Expenses;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 final class Transaction
 {
@@ -16,6 +17,16 @@ final class Transaction
 
     public function ShowDataTransactions($root, array $args)
     {
+        $validator = Validator::make($args, [
+            'month' => 'required|integer|between:1,12',
+            'year' => 'required|integer|digits:4',
+        ]);
+
+        if ($validator->fails()) {
+            throw new \Exception($validator->errors()->first());
+        }
+
+
         $month = $args['month'];
         $year = $args['year'];
 
