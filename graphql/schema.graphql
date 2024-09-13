@@ -60,6 +60,19 @@ type Value {
   created_at: String
   updated_at: String
 }
+type DayTransactions {
+    date: String!
+    incomes: [Transaction!]!
+    expenses: [Transaction!]!
+} 
+
+type Transaction {
+    id: ID!
+    amount: Float!
+    date: String!
+    description: String
+}
+
 
 type AuthPayload {
     access_token: String!
@@ -108,6 +121,9 @@ type Mutation {
     createValue(attribute_id: ID!, entity_id: ID!, entity_type: String!, value: String!): Value! @field(resolver: "App\\GraphQL\\Mutations\\Value@createValue")
     updateValue(id: ID!, attribute_id: ID!, entity_id: ID!, entity_type: String!, value: String!): Value! @field(resolver: "App\\GraphQL\\Mutations\\Value@updateValue")
     deleteValue(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Value@deleteValue")
+
+    # Transaction
+    showDataTransactions(month: Int!, year: Int!): [DayTransactions!]! @field(resolver: "App\\GraphQL\\Mutations\\Transaction@ShowDataTransactions")
 }
 
 type Query {
