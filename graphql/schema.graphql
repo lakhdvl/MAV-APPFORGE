@@ -1,3 +1,155 @@
+type User {
+    id: ID!
+    username: String!
+    email: String!
+}
+
+type Wallet{
+    id: ID!
+    user_id: ID!
+    name: String!
+    balance: Float!
+    currency: String!
+    created_at: String
+    updated_at: String
+}
+
+type Category {
+  id: ID!
+  name: String!
+  type: String!
+  user_id: ID!
+}
+
+type Income {
+  id: ID!
+  user_id: ID!
+  category: Category!
+  wallet: Wallet!
+  amount: Float!
+  date: String!
+  description: String
+  created_at: String
+  updated_at: String
+}
+
+type Expense {
+  id: ID!
+  user_id: ID!
+  category: Category!
+  wallet: Wallet!
+  amount: Float!
+  date: String!
+  description: String
+  created_at: String
+  updated_at: String
+}
+
+type Attribute {
+  id: ID!
+  name: String!
+  entity_type: String!
+  created_at: String
+  updated_at: String
+}
+
+type Value {
+  id: ID!
+  attribute_id: ID!
+  entity_id: ID!
+  entity_type: String!
+  value: String!
+  created_at: String
+  updated_at: String
+}
+
+type DayTransactions {
+    date: String!
+    incomes: [Income!]!
+    expenses: [Expense!]!
+} 
+
+# type Transaction {
+#     id: ID!
+#     amount: Float!
+#     date: String!
+#     description: String
+# }
+
+type AuthPayload {
+    access_token: String!
+    token_type: String!
+    expires_in: Int!
+    user: User
+}
+
+type Message {
+    message: String!
+}
+
+type Mutation {
+    # users
+    register(username: String!, email: String!, password: String!): Message @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@register")
+    login(email: String!, password: String!): AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@login")
+    logout: Message @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@logout")
+    refresh: AuthPayload @field(resolver: "App\\GraphQL\\Mutations\\UserMutations@refresh")
+
+    # wallets
+    createWallet(name: String!, balance: Float!, currency: String!): Wallet! @field(resolver: "App\\GraphQL\\Mutations\\Wallet@createWallet")
+    updateWallet(id: ID!, name: String, balance: Float, currency: String): Wallet! @field(resolver: "App\\GraphQL\\Mutations\\Wallet@updateWallet")
+    deleteWallet(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Wallet@deleteWallet")
+
+    # Category
+    createCategory(name: String!, type: String!): Category! @field(resolver: "App\\GraphQL\\Mutations\\Category@CreateCategory")
+    updateCategory(id: ID!, name: String!, type: String!): Category! @field(resolver: "App\\GraphQL\\Mutations\\Category@UpdateCategory")
+    deleteCategory(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Category@DeleteCategory")
+
+    # Income
+    createIncome(category_id: ID!, wallet_id: ID!, amount: Float!, date: String!, description: String): Income! @field(resolver: "App\\GraphQL\\Mutations\\Income@createIncome")
+    updateIncome(id: ID!, category_id: ID, wallet_id: ID, amount: Float, date: String, description: String): Income! @field(resolver: "App\\GraphQL\\Mutations\\Income@updateIncome")
+    deleteIncome(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Income@deleteIncome")
+
+    # Expense
+    createExpense(category_id: ID!, wallet_id: ID!, amount: Float!, date: String!, description: String): Expense! @field(resolver: "App\\GraphQL\\Mutations\\Expense@createExpense")
+    updateExpense(id: ID!, category_id: ID, wallet_id: ID, amount: Float, date: String, description: String): Expense! @field(resolver: "App\\GraphQL\\Mutations\\Expense@updateExpense")
+    deleteExpense(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Expense@deleteExpense")
+
+    # Attribute
+    createAttribute(name: String!, entity_type: String!): Attribute! @field(resolver: "App\\GraphQL\\Mutations\\Attribute@createAttribute")
+    updateAttribute(id: ID!, name: String!, entity_type: String!): Attribute! @field(resolver: "App\\GraphQL\\Mutations\\Attribute@updateAttribute")
+    deleteAttribute(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Attribute@deleteAttribute")
+
+    # Value 
+    createValue(attribute_id: ID!, entity_id: ID!, entity_type: String!, value: String!): Value! @field(resolver: "App\\GraphQL\\Mutations\\Value@createValue")
+    updateValue(id: ID!, attribute_id: ID!, entity_id: ID!, entity_type: String!, value: String!): Value! @field(resolver: "App\\GraphQL\\Mutations\\Value@updateValue")
+    deleteValue(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Value@deleteValue")
+}
+
 type Query {
-    ping: String!
+    # ping
+    ping: String
+
+    # users
+    info: User @field(resolver: "App\\GraphQL\\Queries\\UserQuery@info")
+
+    # wallets
+    wallets: [Wallet!]! @field(resolver: "App\\GraphQL\\Queries\\Wallet@listWallets")
+
+    # Category
+    categories: [Category!]! @field(resolver: "App\\GraphQL\\Queries\\Category@listCategories")
+
+    # Income 
+    incomes: [Income!]! @field(resolver: "App\\GraphQL\\Queries\\Income@listIncomes")
+
+    # Expense
+    expenses: [Expense!]! @field(resolver: "App\\GraphQL\\Queries\\Expense@listExpenses")
+
+    # Attribute
+    attributes: [Attribute!]! @field(resolver: "App\\GraphQL\\Queries\\Attribute@listAttributes")
+
+    # Value
+    values: [Value!]! @field(resolver: "App\\GraphQL\\Queries\\Value@listValues")
+
+    # Transaction
+    showDataTransactions(month: Int!, year: Int!): [DayTransactions!]! @field(resolver: "App\\GraphQL\\Queries\\Transaction@ShowDataTransactions")
 }
