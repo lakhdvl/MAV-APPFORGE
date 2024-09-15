@@ -50,7 +50,7 @@ final class Expense
         ]);
 
         if (!$expense) {
-            throw new \Exception('Could not create expense');
+            throw new \Exception('Could not create expense!');
         }
         return $expense;
     }
@@ -75,9 +75,8 @@ final class Expense
 
         $expense = Expenses::where('id', $args['id'])->where('user_id', $this->user->id)->first();
 
-
         if (!$expense) {
-            throw new \Exception('expense not found');
+            throw new \Exception('Expense not found!');
         }
 
         $expense->update($args);
@@ -100,15 +99,15 @@ final class Expense
             throw new \Exception($validator->errors()->first());
         }
 
-        $expense = Expenses::where('id', $args['id'])->where('user_id', $this->user->id)->firstOrFail();
+        $expense = Expenses::where('id', $args['id'])->where('user_id', $this->user->id)->first();
 
         if (!$expense) {
-            throw new \Exception('expense not found');
+            throw new \Exception('Expense not found!');
         }
-        $expense->delete();
+        $expense->update(['del_flag' => 1]);
 
         return [
-            'message' => 'Successfully delete expense'
+            'message' => 'Successfully delete expense.'
         ];
     }
 }

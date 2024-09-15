@@ -1,14 +1,29 @@
 <?php
 
-namespace App\GraphQL\Mutations;
+namespace App\GraphQL\Queries;
 
 use App\Models\Income as Incomes;
 use App\Models\Expense as Expenses;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 final class Transaction
 {
+    private $user;
+
+    /**
+     * Authenticate
+     */
+    public function __construct()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            throw new \Exception('Unauthorized!');
+        }
+        $this->user = $user;
+    }
+
     /**
      * ShowDataTransactions
      * @param  null  $_
@@ -26,20 +41,19 @@ final class Transaction
             throw new \Exception($validator->errors()->first());
         }
 
-
         $month = $args['month'];
         $year = $args['year'];
 
-
         $incomes = Incomes::whereMonth('date', $month)
             ->whereYear('date', $year)
+            ->where('user_id', $this->user->id)
             ->where('del_flag', false)
             ->get();
         $expenses = Expenses::whereMonth('date', $month)
             ->whereYear('date', $year)
+            ->where('user_id', $this->user->id)
             ->where('del_flag', false)
             ->get();
-
 
         $daysInMonth = Carbon::createFromDate($year, $month, 1)->daysInMonth;
         $transactionsByDay = [];

@@ -30,7 +30,7 @@ final class Attribute
         ]);
 
         if (!$attribute) {
-            throw new \Exception("Could not create attribute");
+            throw new \Exception("Could not create attribute!");
         }
 
         return $attribute;
@@ -58,7 +58,7 @@ final class Attribute
         $attribute = Attributes::findOrFail($args['id']);
 
         if (!$attribute) {
-            throw new \Exception('attribute not found');
+            throw new \Exception('Attribute not found!');
         }
 
         $attribute->update([
@@ -89,12 +89,12 @@ final class Attribute
         $attribute = Attributes::findOrFail($args['id']);
 
         if (!$attribute) {
-            throw new \Exception('attribute not found');
+            throw new \Exception('Attribute not found!');
         }
         $attribute->delete();
 
         return [
-            'message' => 'Successfully delete attribute '
+            'message' => 'Successfully delete attribute.'
         ];
     }
 }

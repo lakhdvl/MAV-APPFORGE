@@ -35,7 +35,7 @@ final class Value
         ]);
 
         if (!$value) {
-            throw new \Exception("Could not create value");
+            throw new \Exception("Could not create value!");
         }
 
         return $value;
@@ -63,7 +63,7 @@ final class Value
         $value = Values::findOrFail($args['id']);
 
         if (!$value) {
-            throw new \Exception('value not found');
+            throw new \Exception('Value not found!');
         }
 
         $value->update([
@@ -94,12 +94,12 @@ final class Value
         $value = Values::findOrFail($args['id']);
 
         if (!$value) {
-            throw new \Exception('value not found');
+            throw new \Exception('Value not found!');
         }
         $value->delete();
 
         return [
-            'message' => 'Successfully delete value '
+            'message' => 'Successfully delete value.'
         ];
     }
 }

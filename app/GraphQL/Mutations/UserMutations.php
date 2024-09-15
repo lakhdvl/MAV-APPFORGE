@@ -35,19 +35,20 @@ final class UserMutations
         ]);
 
         return [
-            'message' => 'success'
+            'message' => 'Success.'
         ];
     }
+
     public function login($rootValue, array $args)
     {
         $credentials = ['email' => $args['email'], 'password' => $args['password']];
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                throw new \Exception('Unauthorized');
+                throw new \Exception('Unauthorized!');
             }
         } catch (JWTException $e) {
-            throw new \Exception('Could not create token');
+            throw new \Exception('Could not create token!');
         }
 
         return $this->respondWithToken($token);
@@ -58,7 +59,7 @@ final class UserMutations
         Auth::logout();
 
         return [
-            'message' => 'Successfully logged out'
+            'message' => 'Successfully logged out.'
         ];
     }
 
@@ -66,6 +67,7 @@ final class UserMutations
     {
         return $this->respondWithToken(Auth::refresh());
     }
+
     protected function respondWithToken($token)
     {
         return [

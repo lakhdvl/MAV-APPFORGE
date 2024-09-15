@@ -18,7 +18,7 @@ final class Category
     {
         $user = Auth::user();
         if (!$user) {
-            throw new \Exception('Unauthorized');
+            throw new \Exception('Unauthorized!');
         }
         $this->user = $user;
     }
@@ -47,7 +47,7 @@ final class Category
         ]);
 
         if (!$categories) {
-            throw new \Exception('Could not create Category');
+            throw new \Exception('Could not create Category!');
         }
         return $categories;
     }
@@ -73,7 +73,7 @@ final class Category
         $category = Categories::where('id', $args['id'])->where('user_id', $this->user->id)->first();
 
         if (!$category) {
-            throw new \Exception('category not found');
+            throw new \Exception('Category not found!');
         }
 
         if (isset($args['name'])) {
@@ -111,12 +111,12 @@ final class Category
         $category = Categories::where('id', $args['id'])->where('user_id', $this->user->id)->first();
 
         if (!$category) {
-            throw new \Exception('Category not found');
+            throw new \Exception('Category not found!');
         }
         $category->delete();
 
         return [
-            'message' => 'Successfully delete Category'
+            'message' => 'Successfully delete Category.'
         ];
     }
 }

@@ -8,7 +8,7 @@ class Expense extends Model
 {
     protected $table = 'expenses';
 
-    protected $fillable = ['user_id' , 'category_id', 'wallet_id', 'amount', 'date' , 'description'];
+    protected $fillable = ['user_id' , 'category_id', 'wallet_id', 'amount', 'date' , 'description', 'del_flag'];
 
     public function user(){
         return $this->belongsTo(User::class);

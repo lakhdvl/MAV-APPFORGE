@@ -3,6 +3,7 @@ type User {
     username: String!
     email: String!
 }
+
 type Wallet{
     id: ID!
     user_id: ID!
@@ -31,6 +32,7 @@ type Income {
   created_at: String
   updated_at: String
 }
+
 type Expense {
   id: ID!
   user_id: ID!
@@ -60,19 +62,19 @@ type Value {
   created_at: String
   updated_at: String
 }
+
 type DayTransactions {
     date: String!
-    incomes: [Transaction!]!
-    expenses: [Transaction!]!
+    incomes: [Income!]!
+    expenses: [Expense!]!
 } 
 
-type Transaction {
-    id: ID!
-    amount: Float!
-    date: String!
-    description: String
-}
-
+# type Transaction {
+#     id: ID!
+#     amount: Float!
+#     date: String!
+#     description: String
+# }
 
 type AuthPayload {
     access_token: String!
@@ -121,9 +123,6 @@ type Mutation {
     createValue(attribute_id: ID!, entity_id: ID!, entity_type: String!, value: String!): Value! @field(resolver: "App\\GraphQL\\Mutations\\Value@createValue")
     updateValue(id: ID!, attribute_id: ID!, entity_id: ID!, entity_type: String!, value: String!): Value! @field(resolver: "App\\GraphQL\\Mutations\\Value@updateValue")
     deleteValue(id: ID!): Message! @field(resolver: "App\\GraphQL\\Mutations\\Value@deleteValue")
-
-    # Transaction
-    showDataTransactions(month: Int!, year: Int!): [DayTransactions!]! @field(resolver: "App\\GraphQL\\Mutations\\Transaction@ShowDataTransactions")
 }
 
 type Query {
@@ -151,5 +150,6 @@ type Query {
     # Value
     values: [Value!]! @field(resolver: "App\\GraphQL\\Queries\\Value@listValues")
 
-
+    # Transaction
+    showDataTransactions(month: Int!, year: Int!): [DayTransactions!]! @field(resolver: "App\\GraphQL\\Queries\\Transaction@ShowDataTransactions")
 }

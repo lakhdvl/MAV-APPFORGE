@@ -21,6 +21,7 @@ class CreateIncomesTable extends Migration
             $table->decimal('amount', 15, 2);
             $table->date('date');
             $table->text('description')->nullable();
+            $table->boolean('del_flag')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

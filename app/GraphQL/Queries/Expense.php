@@ -12,7 +12,7 @@ class Expense
     {
         $user = Auth::user();
         if (!$user) {
-            throw new \Exception('Unauthorized');
+            throw new \Exception('Unauthorized!');
         }
         $this->user = $user;
     }

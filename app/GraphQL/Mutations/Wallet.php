@@ -16,7 +16,7 @@ class Wallet
     {
         $user = Auth::user();
         if (!$user) {
-            throw new \Exception('Unauthorized');
+            throw new \Exception('Unauthorized!');
         }
         $this->user = $user;
     }
@@ -47,7 +47,7 @@ class Wallet
         ]);
 
         if (!$wallet) {
-            throw new \Exception('Could not create wallet');
+            throw new \Exception('Could not create wallet!');
         }
 
         return $wallet;
@@ -75,7 +75,7 @@ class Wallet
         $wallet = WalletModel::where('id', $args['id'])->where('user_id', $this->user->id)->first();
 
         if (!$wallet) {
-            throw new \Exception('Wallet not found');
+            throw new \Exception('Wallet not found!');
         }
 
         if (isset($args['name'])) {
@@ -114,13 +114,13 @@ class Wallet
         $wallet = WalletModel::where('id', $args['id'])->where('user_id', $this->user->id)->first();
 
         if (!$wallet) {
-            throw new \Exception('Wallet not found');
+            throw new \Exception('Wallet not found!');
         }
 
         $wallet->delete();
 
         return [
-            'message' => 'Successfully delete Wallet'
+            'message' => 'Successfully delete Wallet.'
         ];
     }
 }

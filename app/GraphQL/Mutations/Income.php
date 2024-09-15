@@ -50,7 +50,7 @@ final class Income
         ]);
 
         if (!$incomes) {
-            throw new \Exception('Could not create Income');
+            throw new \Exception('Could not create Income!');
         }
         return $incomes;
     }
@@ -76,9 +76,8 @@ final class Income
 
         $income = Incomes::where('id', $args['id'])->where('user_id', $this->user->id)->first();
 
-
         if (!$income) {
-            throw new \Exception('category not found');
+            throw new \Exception('Income not found!');
         }
 
         $income->update($args);
@@ -102,15 +101,15 @@ final class Income
             throw new \Exception($validator->errors()->first());
         }
 
-        $income = Incomes::where('id', $args['id'])->where('user_id', $this->user->id)->firstOrFail();
+        $income = Incomes::where('id', $args['id'])->where('user_id', $this->user->id)->first();
 
         if (!$income) {
-            throw new \Exception('Income not found');
+            throw new \Exception('Income not found!');
         }
-        $income->delete();
+        $income->update(['del_flag' => 1]);
 
         return [
-            'message' => 'Successfully delete Category'
+            'message' => 'Successfully delete Category.'
         ];
     }
 }
